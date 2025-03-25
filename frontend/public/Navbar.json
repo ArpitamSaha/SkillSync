@@ -1,0 +1,22 @@
+[
+    {
+        "key" : 1,
+        "name" : "Home",
+        "link" : "/"
+    },
+    {
+        "key" : 2,
+        "name" : "Upload",
+        "link" : "/upload"
+    },
+    {
+        "key" : 3,
+        "name" : "Find",
+        "link" : "/find"
+    },
+    {
+        "key" : 4,
+        "name" : "Add Skills",
+        "link" : "/addSkill"
+    }
+]

@@ -1,0 +1,263 @@
+{
+  "machine learning": [
+    "random forest",
+    "svm",
+    "decision trees",
+    "xgboost",
+    "scikit-learn",
+    "tensorflow",
+    "pytorch",
+    "ensemble learning",
+    "gradio"
+  ],
+  "deep learning": [
+    "cnn",
+    "rnn",
+    "lstm",
+    "transformer",
+    "gan",
+    "autoencoder",
+    "yolo",
+    "bert",
+    "gpt"
+  ],
+  "data science": [
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "seaborn",
+    "scikit-learn",
+    "statistics",
+    "eda",
+    "data visualization"
+  ],
+  "big data": [
+    "hadoop",
+    "spark",
+    "hive",
+    "kafka",
+    "etl",
+    "mapreduce",
+    "flink",
+    "delta lake"
+  ],
+  "artificial intelligence": [
+    "nlp",
+    "computer vision",
+    "reinforcement learning",
+    "chatbots",
+    "robotics",
+    "expert systems"
+  ],
+  "natural language processing": [
+    "text mining",
+    "tokenization",
+    "word embeddings",
+    "named entity recognition",
+    "sentiment analysis",
+    "bert",
+    "gpt",
+    "nltk",
+    "spacy"
+  ],
+  "computer vision": [
+    "opencv",
+    "yolo",
+    "object detection",
+    "image segmentation",
+    "image processing",
+    "feature extraction"
+  ],
+  "cloud computing": [
+    "aws",
+    "azure",
+    "gcp",
+    "kubernetes",
+    "docker",
+    "serverless",
+    "terraform"
+  ],
+  "devops": [
+    "jenkins",
+    "gitlab ci/cd",
+    "docker",
+    "kubernetes",
+    "ansible",
+    "terraform",
+    "helm",
+    "istio"
+  ],
+  "mern": [
+    "mongodb",
+    "express.js",
+    "react",
+    "node.js"
+  ],
+  "mean": [
+    "mongodb",
+    "express.js",
+    "angular",
+    "node.js"
+  ],
+  "pern": [
+    "postgresql",
+    "express.js",
+    "react",
+    "node.js"
+  ],
+  "web development": [
+    "html",
+    "css",
+    "javascript",
+    "jquery",
+    "bootstrap",
+    "tailwind",
+    "sass",
+    "webpack"
+  ],
+  "frontend development": [
+    "react.js",
+    "angular",
+    "vue.js",
+    "next.js",
+    "typescript",
+    "redux",
+    "zustand",
+    "graphql"
+  ],
+  "backend development": [
+    "java",
+    "spring boot",
+    "dotnet",
+    "flask",
+    "django",
+    "node.js",
+    "express.js",
+    "nestjs",
+    "php",
+    "ruby on rails"
+  ],
+  "full stack development": [
+    "mern",
+    "mean",
+    "pern",
+    "graphql",
+    "rest api",
+    "microservices"
+  ],
+  "database management": [
+    "sql",
+    "nosql",
+    "mysql",
+    "postgresql",
+    "mongodb",
+    "redis",
+    "oracle",
+    "cassandra",
+    "firebase"
+  ],
+  "software development": [
+    "oop",
+    "design patterns",
+    "microservices",
+    "rest api",
+    "graphql",
+    "agile",
+    "scrum",
+    "ci/cd"
+  ],
+  "cybersecurity": [
+    "intrusion detection",
+    "firewall",
+    "encryption",
+    "ethical hacking",
+    "penetration testing",
+    "owasp",
+    "zero trust"
+  ],
+  "sap": [
+    "sap hana",
+    "sap erp",
+    "sap fico",
+    "sap abap",
+    "sap mm",
+    "sap scm",
+    "sap s/4hana",
+    "sap bw"
+  ],
+  "salesforce": [
+    "salesforce crm",
+    "salesforce lightning",
+    "apex",
+    "visualforce",
+    "salesforce marketing cloud"
+  ],
+  "business intelligence": [
+    "tableau",
+    "power bi",
+    "looker",
+    "qlikview",
+    "dax",
+    "sql",
+    "etl",
+    "olap"
+  ],
+  "embedded systems": [
+    "raspberry pi",
+    "arduino",
+    "rtos",
+    "mqtt",
+    "zigbee",
+    "edge computing",
+    "firmware",
+    "ble"
+  ],
+  "networking": [
+    "tcp/ip",
+    "dns",
+    "http/https",
+    "vpn",
+    "routing",
+    "switching",
+    "load balancer",
+    "proxy"
+  ],
+  "mobile app development": [
+    "android",
+    "ios",
+    "flutter",
+    "react native",
+    "swift",
+    "kotlin",
+    "dart"
+  ],
+  "game development": [
+    "unity",
+    "unreal engine",
+    "c#",
+    "game physics",
+    "3d modeling",
+    "opengl",
+    "directx"
+  ],
+  "blockchain": [
+    "ethereum",
+    "solidity",
+    "smart contracts",
+    "nfts",
+    "defi",
+    "hyperledger",
+    "ipfs"
+  ],
+  "software testing": [
+    "selenium",
+    "junit",
+    "testng",
+    "cypress",
+    "postman",
+    "load testing",
+    "api testing",
+    "tdd",
+    "bdd"
+  ]
+}

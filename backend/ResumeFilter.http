@@ -1,6 +1,0 @@
-@ResumeFilter_HostAddress = http://localhost:5159
-
-GET {{ResumeFilter_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

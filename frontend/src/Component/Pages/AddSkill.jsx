@@ -1,211 +1,1307 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, AlertTriangle, PlusCircle, Database } from 'lucide-react';
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+// import { motion } from "framer-motion";
+// import {
+//   CheckCircle,
+//   AlertTriangle,
+//   PlusCircle,
+//   Database,
+//   Search,
+//   Award,
+//   Tag,
+//   Layers,
+// } from "lucide-react";
+
+// const AddSkill = () => {
+//   const [skill, setSkill] = useState([]);
+//   const [formData, setFormData] = useState({ key: "", value: "" });
+//   const [loading, setLoading] = useState(false);
+//   const [notification, setNotification] = useState({
+//     show: false,
+//     message: "",
+//     type: "",
+//   });
+//   const [recentlyAdded, setRecentlyAdded] = useState([]);
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [activeTab, setActiveTab] = useState("add");
+
+//   useEffect(() => {
+//     setLoading(true);
+//     fetch("/SkillMapper.json")
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setSkill(data);
+//         if (data.length > 0) {
+//           setFormData((prevState) => ({ ...prevState, key: data[0].value }));
+//         }
+//         setLoading(false);
+//       })
+//       .catch((error) => {
+//         console.error("Error loading skills:", error);
+//         setLoading(false);
+//         setNotification({
+//           show: true,
+//           message: "Failed to load categories. Please refresh the page.",
+//           type: "error",
+//         });
+//       });
+//   }, []);
+
+//   const handleChange = (e) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//   };
+
+//   const handleAddSkill = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     try {
+//       const response = await axios.post(
+//         "https://localhost:7138/api/SkillMapping/add-skill",
+//         formData,
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//         }
+//       );
+
+//       setNotification({
+//         show: true,
+//         message: "Skill added successfully!",
+//         type: "success",
+//       });
+
+//       // Add to recently added list without hardcoding
+//       setRecentlyAdded((prev) => [{ ...formData }, ...prev].slice(0, 5));
+
+//       // Reset form data
+//       setFormData({ ...formData, value: "" });
+//     } catch (error) {
+//       setNotification({
+//         show: true,
+//         message:
+//           "Skill addition failed! " + (error.response?.data || "Unknown error"),
+//         type: "error",
+//       });
+//     } finally {
+//       setLoading(false);
+//       // Auto-hide notification after 5 seconds
+//       setTimeout(() => {
+//         setNotification({ show: false, message: "", type: "" });
+//       }, 5000);
+//     }
+//   };
+
+//   const filteredCategories = skill.filter((item) =>
+//     item.value.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+
+//   const fadeInUp = {
+//     hidden: { opacity: 0, y: 20 },
+//     visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+//   };
+
+//   return (
+//     <div className="flex flex-col h-screen bg-gray-50">
+//       {/* Main Content */}
+//       <div className="flex flex-1 overflow-hidden">
+//         {/* Sidebar */}
+//         <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+//           <nav className="flex-1 p-4 space-y-1">
+//             <button
+//               onClick={() => setActiveTab("add")}
+//               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-md text-sm ${
+//                 activeTab === "add"
+//                   ? "bg-blue-50 text-blue-700 font-medium"
+//                   : "text-gray-700 hover:bg-gray-100"
+//               }`}
+//             >
+//               <PlusCircle size={18} />
+//               <span>Add Skills</span>
+//             </button>
+
+//             <button
+//               onClick={() => setActiveTab("browse")}
+//               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-md text-sm ${
+//                 activeTab === "browse"
+//                   ? "bg-blue-50 text-blue-700 font-medium"
+//                   : "text-gray-700 hover:bg-gray-100"
+//               }`}
+//             >
+//               <Search size={18} />
+//               <span>Browse Categories</span>
+//             </button>
+
+//             <button
+//               onClick={() => setActiveTab("recent")}
+//               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-md text-sm ${
+//                 activeTab === "recent"
+//                   ? "bg-blue-50 text-blue-700 font-medium"
+//                   : "text-gray-700 hover:bg-gray-100"
+//               }`}
+//             >
+//               <Award size={18} />
+//               <span>Recently Added</span>
+//             </button>
+//           </nav>
+
+//           <div className="p-4 border-t border-gray-200">
+//             <div className="bg-gray-50 rounded-md p-3">
+//               <div className="text-xs font-medium text-gray-500 uppercase mb-2">
+//                 Quick Stats
+//               </div>
+//               <div className="grid grid-cols-2 gap-2">
+//                 <div className="bg-white p-2 rounded border border-gray-200">
+//                   <div className="text-xs text-gray-500">Categories</div>
+//                   <div className="font-medium">{skill.length}</div>
+//                 </div>
+//                 <div className="bg-white p-2 rounded border border-gray-200">
+//                   <div className="text-xs text-gray-500">Recent</div>
+//                   <div className="font-medium">{recentlyAdded.length}</div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Main Panel */}
+//         <div className="flex-1 flex flex-col overflow-hidden">
+//           {/* Notification */}
+//           {notification.show && (
+//             <motion.div
+//             className={`absolute top-5 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-md flex items-center shadow-md z-50 
+//               ${notification.type === "success"
+//                 ? "bg-green-50 text-green-700 border-l-4 border-green-500"
+//                 : "bg-red-50 text-red-700 border-l-4 border-red-500"
+//               }`}
+//             initial={{ opacity: 0, y: -20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             exit={{ opacity: 0 }}
+//           >
+//             {notification.type === "success" ? (
+//               <CheckCircle className="mr-2 flex-shrink-0" size={20} />
+//             ) : (
+//               <AlertTriangle className="mr-2 flex-shrink-0" size={20} />
+//             )}
+//             <div>
+//               <p className="font-medium">
+//                 {notification.type === "success" ? "Success" : "Error"}
+//               </p>
+//               <p className="text-sm">{notification.message}</p>
+//             </div>
+//           </motion.div>
+          
+//           )}
+
+//           <div className="flex-1 overflow-auto p-6">
+//             {/* Add Skills Tab */}
+//             {activeTab === "add" && (
+//               <motion.div
+//                 className="max-w-3xl mx-auto"
+//                 initial="hidden"
+//                 animate="visible"
+//                 variants={fadeInUp}
+//               >
+//                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//                   <div className="border-b border-gray-200 px-6 py-4">
+//                     <div className="flex items-center">
+//                       <PlusCircle className="text-blue-600 mr-3" size={20} />
+//                       <h2 className="text-lg font-medium text-gray-800">
+//                         Add New Skill
+//                       </h2>
+//                     </div>
+//                   </div>
+
+//                   <div className="p-6">
+//                     <form className="space-y-5" onSubmit={handleAddSkill}>
+//                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                         <div>
+//                           <label
+//                             htmlFor="key"
+//                             className="block text-sm font-medium text-gray-700 mb-1"
+//                           >
+//                             Skill Category
+//                           </label>
+//                           <div className="relative">
+//                             <select
+//                               id="key"
+//                               name="key"
+//                               className="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-md transition-all duration-200 bg-white"
+//                               onChange={handleChange}
+//                               required
+//                               value={formData.key}
+//                               disabled={loading || skill.length === 0}
+//                             >
+//                               {skill.length === 0 && (
+//                                 <option value="">Loading categories...</option>
+//                               )}
+//                               {skill.map((item, index) => (
+//                                 <option key={index} value={item.value}>
+//                                   {item.value}
+//                                 </option>
+//                               ))}
+//                             </select>
+//                             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+//                               <Layers className="h-5 w-5 text-gray-400" />
+//                             </div>
+//                           </div>
+//                           <p className="mt-1 text-xs text-gray-500">
+//                             Select an existing skill category
+//                           </p>
+//                         </div>
+
+//                         <div>
+//                           <label
+//                             htmlFor="value"
+//                             className="block text-sm font-medium text-gray-700 mb-1"
+//                           >
+//                             Skill Name
+//                           </label>
+//                           <div className="relative">
+//                             <input
+//                               type="text"
+//                               id="value"
+//                               name="value"
+//                               value={formData.value}
+//                               className="block w-full pl-3 pr-10 py-2.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+//                               placeholder="Enter the skill name"
+//                               onChange={handleChange}
+//                               required
+//                               disabled={loading}
+//                             />
+//                             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+//                               <Tag className="h-5 w-5 text-gray-400" />
+//                             </div>
+//                           </div>
+//                           <p className="mt-1 text-xs text-gray-500">
+//                             Enter a unique skill name
+//                           </p>
+//                         </div>
+//                       </div>
+
+//                       <div className="flex justify-end pt-2">
+//                         <button
+//                           type="submit"
+//                           disabled={loading || skill.length === 0}
+//                           className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+//                         >
+//                           {loading ? (
+//                             <>
+//                               <svg
+//                                 className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+//                                 xmlns="http://www.w3.org/2000/svg"
+//                                 fill="none"
+//                                 viewBox="0 0 24 24"
+//                               >
+//                                 <circle
+//                                   className="opacity-25"
+//                                   cx="12"
+//                                   cy="12"
+//                                   r="10"
+//                                   stroke="currentColor"
+//                                   strokeWidth="4"
+//                                 ></circle>
+//                                 <path
+//                                   className="opacity-75"
+//                                   fill="currentColor"
+//                                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+//                                 ></path>
+//                               </svg>
+//                               Processing...
+//                             </>
+//                           ) : (
+//                             <>
+//                               <PlusCircle className="mr-2" size={16} />
+//                               Add Skill
+//                             </>
+//                           )}
+//                         </button>
+//                       </div>
+//                     </form>
+//                   </div>
+//                 </div>
+
+//                 <div className="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//                   <div className="border-b border-gray-200 px-6 py-4">
+//                     <div className="flex items-center justify-between">
+//                       <div className="flex items-center">
+//                         <Award className="text-blue-600 mr-3" size={20} />
+//                         <h2 className="text-lg font-medium text-gray-800">
+//                           Recently Added Skills
+//                         </h2>
+//                       </div>
+//                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+//                         Current session
+//                       </span>
+//                     </div>
+//                   </div>
+
+//                   <div className="divide-y divide-gray-200">
+//                     {recentlyAdded.length > 0 ? (
+//                       recentlyAdded.map((item, index) => (
+//                         <div
+//                           key={index}
+//                           className="px-6 py-3 flex justify-between items-center"
+//                         >
+//                           <div>
+//                             <div className="font-medium text-gray-800">
+//                               {item.value}
+//                             </div>
+//                             <div className="text-sm text-gray-500">
+//                               Category: {item.key}
+//                             </div>
+//                           </div>
+//                           <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+//                             New
+//                           </span>
+//                         </div>
+//                       ))
+//                     ) : (
+//                       <div className="px-6 py-4 text-center text-gray-500">
+//                         No skills added in this session
+//                       </div>
+//                     )}
+//                   </div>
+//                 </div>
+//               </motion.div>
+//             )}
+
+//             {/* Browse Categories Tab */}
+//             {activeTab === "browse" && (
+//               <motion.div
+//                 className="max-w-4xl mx-auto"
+//                 initial="hidden"
+//                 animate="visible"
+//                 variants={fadeInUp}
+//               >
+//                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//                   <div className="border-b border-gray-200 px-6 py-4">
+//                     <div className="flex items-center justify-between">
+//                       <div className="flex items-center">
+//                         <Search className="text-blue-600 mr-3" size={20} />
+//                         <h2 className="text-lg font-medium text-gray-800">
+//                           Browse Skill Categories
+//                         </h2>
+//                       </div>
+//                       <span className="text-sm text-gray-500">
+//                         {filteredCategories.length} categories
+//                       </span>
+//                     </div>
+//                   </div>
+
+//                   <div className="px-6 py-4 border-b border-gray-200">
+//                     <div className="relative">
+//                       <input
+//                         type="text"
+//                         className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//                         placeholder="Search categories..."
+//                         value={searchQuery}
+//                         onChange={(e) => setSearchQuery(e.target.value)}
+//                         disabled={loading}
+//                       />
+//                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+//                         <Search className="h-5 w-5 text-gray-400" />
+//                       </div>
+//                     </div>
+//                   </div>
+
+//                   <div className="px-6 py-4">
+//                     {loading ? (
+//                       <div className="flex justify-center items-center py-12">
+//                         <svg
+//                           className="animate-spin h-8 w-8 text-blue-500"
+//                           xmlns="http://www.w3.org/2000/svg"
+//                           fill="none"
+//                           viewBox="0 0 24 24"
+//                         >
+//                           <circle
+//                             className="opacity-25"
+//                             cx="12"
+//                             cy="12"
+//                             r="10"
+//                             stroke="currentColor"
+//                             strokeWidth="4"
+//                           ></circle>
+//                           <path
+//                             className="opacity-75"
+//                             fill="currentColor"
+//                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+//                           ></path>
+//                         </svg>
+//                       </div>
+//                     ) : (
+//                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+//                         {filteredCategories.length > 0 ? (
+//                           filteredCategories.map((item, index) => (
+//                             <motion.div
+//                               key={index}
+//                               className="px-4 py-3 rounded-md bg-gray-50 border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
+//                               whileHover={{ scale: 1.03 }}
+//                               whileTap={{ scale: 0.98 }}
+//                             >
+//                               <div className="font-medium text-gray-800 truncate">
+//                                 {item.value}
+//                               </div>
+//                             </motion.div>
+//                           ))
+//                         ) : (
+//                           <div className="col-span-full text-center py-8 text-gray-500">
+//                             {searchQuery
+//                               ? "No matching categories found"
+//                               : "No categories available"}
+//                           </div>
+//                         )}
+//                       </div>
+//                     )}
+//                   </div>
+//                 </div>
+//               </motion.div>
+//             )}
+
+//             {/* Recently Added Tab */}
+//             {activeTab === "recent" && (
+//               <motion.div
+//                 className="max-w-4xl mx-auto"
+//                 initial="hidden"
+//                 animate="visible"
+//                 variants={fadeInUp}
+//               >
+//                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+//                   <div className="border-b border-gray-200 px-6 py-4">
+//                     <div className="flex items-center">
+//                       <Award className="text-blue-600 mr-3" size={20} />
+//                       <h2 className="text-lg font-medium text-gray-800">
+//                         Recently Added Skills
+//                       </h2>
+//                     </div>
+//                   </div>
+
+//                   <div className="overflow-hidden">
+//                     {recentlyAdded.length > 0 ? (
+//                       <table className="min-w-full divide-y divide-gray-200">
+//                         <thead className="bg-gray-50">
+//                           <tr>
+//                             <th
+//                               scope="col"
+//                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+//                             >
+//                               Skill Name
+//                             </th>
+//                             <th
+//                               scope="col"
+//                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+//                             >
+//                               Category
+//                             </th>
+//                             <th
+//                               scope="col"
+//                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+//                             >
+//                               Status
+//                             </th>
+//                           </tr>
+//                         </thead>
+//                         <tbody className="bg-white divide-y divide-gray-200">
+//                           {recentlyAdded.map((item, index) => (
+//                             <tr key={index}>
+//                               <td className="px-6 py-4 whitespace-nowrap">
+//                                 <div className="font-medium text-gray-900">
+//                                   {item.value}
+//                                 </div>
+//                               </td>
+//                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+//                                 {item.key}
+//                               </td>
+//                               <td className="px-6 py-4 whitespace-nowrap">
+//                                 <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+//                                   Active
+//                                 </span>
+//                               </td>
+//                             </tr>
+//                           ))}
+//                         </tbody>
+//                       </table>
+//                     ) : (
+//                       <div className="px-6 py-12 text-center text-gray-500">
+//                         <p>No skills have been added in this session</p>
+//                         <p className="text-sm mt-2">
+//                           Added skills will appear here
+//                         </p>
+//                       </div>
+//                     )}
+//                   </div>
+//                 </div>
+//               </motion.div>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AddSkill;
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  CheckCircle,
+  AlertTriangle,
+  PlusCircle,
+  Search,
+  Award,
+  Tag,
+  Layers,
+  Trash2,
+} from "lucide-react";
 
 const AddSkill = () => {
-    const [skill, setSkill] = useState([]);
-    const [formData, setFormData] = useState({ key: "", value: "" });
-    const [loading, setLoading] = useState(false);
-    const [notification, setNotification] = useState({ show: false, message: "", type: "" });
+  const [skill, setSkill] = useState([]);
+  const [formData, setFormData] = useState({ key: "", value: "" });
+  const [deleteFormData, setDeleteFormData] = useState({ key: "", value: "" });
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    type: "",
+  });
+  const [recentActivities, setRecentActivities] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("add");
 
-    useEffect(() => {
-        setLoading(true);
-        fetch('/SkillMapper.json')
-            .then((response) => response.json())
-            .then((data) => {
-                setSkill(data);
-                if (data.length > 0) {
-                    setFormData(prevState => ({ ...prevState, key: data[0].value }));
-                }
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error("Error loading skills:", error);
-                setLoading(false);
-            });
-    }, []);
+  // Load skills and recent activities from localStorage on component mount
+  useEffect(() => {
+    loadSkills();
+    const savedActivities = localStorage.getItem("skillActivities");
+    if (savedActivities) {
+      try {
+        const parsedActivities = JSON.parse(savedActivities);
+        // Convert string timestamps back to Date objects
+        const activitiesWithDates = parsedActivities.map(activity => ({
+          ...activity,
+          timestamp: new Date(activity.timestamp)
+        }));
+        setRecentActivities(activitiesWithDates);
+      } catch (error) {
+        console.error("Failed to parse saved activities", error);
+      }
+    }
+  }, []);
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  // Save recent activities to localStorage whenever they change
+  useEffect(() => {
+    if (recentActivities.length > 0) {
+      localStorage.setItem("skillActivities", JSON.stringify(recentActivities));
+    }
+  }, [recentActivities]);
 
-    const handleAddSkill = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            await axios.post("https://localhost:7199/api/SkillMapping/add-skill", formData, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            setNotification({ show: true, message: "Skill added successfully!", type: "success" });
-            // Reset form data
-            setFormData({ ...formData, value: "" });
-        } catch (error) {
-            setNotification({ 
-                show: true, 
-                message: "Skill addition failed! " + (error.response?.data || "Unknown error"), 
-                type: "error" 
-            });
-        } finally {
-            setLoading(false);
-            // Auto-hide notification after 5 seconds
-            setTimeout(() => {
-                setNotification({ show: false, message: "", type: "" });
-            }, 5000);
+  const loadSkills = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("/SkillMapper.json");
+      const data = await response.json();
+      setSkill(data);
+      if (data.length > 0) {
+        setFormData((prev) => ({ ...prev, key: data[0].value }));
+      }
+    } catch (error) {
+      console.error("Error loading skills:", error);
+      setNotification({
+        show: true,
+        message: "Failed to load categories. Please refresh the page.",
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddSkill = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://localhost:7138/api/SkillMapping/add-skill",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-    };
+      );
 
-    // Animation variants
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: { 
-            opacity: 1,
-            transition: { 
-                duration: 0.5,
-                when: "beforeChildren",
-                staggerChildren: 0.1
-            }
+      setNotification({
+        show: true,
+        message: "Skill added successfully!",
+        type: "success",
+      });
+
+      const newActivity = {
+        type: "added",
+        data: { ...formData },
+        timestamp: new Date(),
+      };
+
+      setRecentActivities((prev) => {
+        const updatedActivities = [newActivity, ...prev].slice(0, 10);
+        return updatedActivities;
+      });
+
+      setFormData({ ...formData, value: "" });
+      await loadSkills();
+    } catch (error) {
+      setNotification({
+        show: true,
+        message:
+          "Skill addition failed! " + (error.response?.data || "Unknown error"),
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setNotification({ show: false, message: "", type: "" });
+      }, 5000);
+    }
+  };
+
+  const handleDeleteSkill = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.delete(
+        "https://localhost:7138/api/SkillMapping/delete-skill",
+        {
+          data: deleteFormData,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-    };
+      );
 
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: { 
-            y: 0,
-            opacity: 1,
-            transition: { duration: 0.4 }
-        }
-    };
+      setNotification({
+        show: true,
+        message: "Skill deleted successfully!",
+        type: "success",
+      });
 
-    return (
-        <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 p-6">
-            <motion.div 
-                className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8 relative overflow-hidden"
-                variants={containerVariants}
+      const newActivity = {
+        type: "deleted",
+        data: { ...deleteFormData },
+        timestamp: new Date(),
+      };
+
+      setRecentActivities((prev) => {
+        const updatedActivities = [newActivity, ...prev].slice(0, 10);
+        return updatedActivities;
+      });
+
+      setDeleteFormData({ key: "", value: "" });
+      await loadSkills();
+    } catch (error) {
+      setNotification({
+        show: true,
+        message: "Skill deletion failed! " + (error.response?.data || "Unknown error"),
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setNotification({ show: false, message: "", type: "" });
+      }, 5000);
+    }
+  };
+
+  const clearRecentActivities = () => {
+    if (window.confirm("Are you sure you want to clear all recent activities?")) {
+      setRecentActivities([]);
+      localStorage.removeItem("skillActivities");
+    }
+  };
+
+  const filteredCategories = skill.filter((item) =>
+    item.value.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  };
+
+  return (
+    <div className="flex flex-col h-screen bg-gray-50">
+      {/* Main Content */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+          <nav className="flex-1 p-4 space-y-1">
+            <button
+              onClick={() => setActiveTab("add")}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-md text-sm ${
+                activeTab === "add"
+                  ? "bg-blue-50 text-blue-700 font-medium"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <PlusCircle size={18} />
+              <span>Add Skills</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("delete")}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-md text-sm ${
+                activeTab === "delete"
+                  ? "bg-blue-50 text-blue-700 font-medium"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <Trash2 size={18} />
+              <span>Delete Skills</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("browse")}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-md text-sm ${
+                activeTab === "browse"
+                  ? "bg-blue-50 text-blue-700 font-medium"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <Search size={18} />
+              <span>Browse Categories</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab("recent")}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-md text-sm ${
+                activeTab === "recent"
+                  ? "bg-blue-50 text-blue-700 font-medium"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              <Award size={18} />
+              <span>Recent Activities</span>
+            </button>
+          </nav>
+
+          <div className="p-4 border-t border-gray-200">
+            <div className="bg-gray-50 rounded-md p-3">
+              <div className="text-xs font-medium text-gray-500 uppercase mb-2">
+                Quick Stats
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="bg-white p-2 rounded border border-gray-200">
+                  <div className="text-xs text-gray-500">Categories</div>
+                  <div className="font-medium">{skill.length}</div>
+                </div>
+                <div className="bg-white p-2 rounded border border-gray-200">
+                  <div className="text-xs text-gray-500">Activities</div>
+                  <div className="font-medium">{recentActivities.length}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Panel */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Notification */}
+          {notification.show && (
+            <motion.div
+              className={`absolute top-5 left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-md flex items-center shadow-md z-50 ${
+                notification.type === "success"
+                  ? "bg-green-50 text-green-700 border-l-4 border-green-500"
+                  : "bg-red-50 text-red-700 border-l-4 border-red-500"
+              }`}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+            >
+              {notification.type === "success" ? (
+                <CheckCircle className="mr-2 flex-shrink-0" size={20} />
+              ) : (
+                <AlertTriangle className="mr-2 flex-shrink-0" size={20} />
+              )}
+              <div>
+                <p className="font-medium">
+                  {notification.type === "success" ? "Success" : "Error"}
+                </p>
+                <p className="text-sm">{notification.message}</p>
+              </div>
+            </motion.div>
+          )}
+
+          <div className="flex-1 overflow-auto p-6">
+            {/* Add Skills Tab */}
+            {activeTab === "add" && (
+              <motion.div
+                className="max-w-3xl mx-auto"
                 initial="hidden"
                 animate="visible"
-            >
-                {/* Decorative element */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
-                
-                <motion.div className="flex items-center mb-6" variants={itemVariants}>
-                    <Database className="text-blue-600 mr-3" size={24} />
-                    <h1 className="text-2xl font-semibold text-gray-800">Add New Skill</h1>
-                </motion.div>
-                
-                <p className="text-gray-600 mb-6">Add a new skill to the system by selecting a category and entering the skill name.</p>
-                
-                {notification.show && (
-                    <motion.div 
-                        className={`p-4 mb-6 rounded-md flex items-center ${notification.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        {notification.type === 'success' ? 
-                            <CheckCircle className="mr-2" size={20} /> : 
-                            <AlertTriangle className="mr-2" size={20} />
-                        }
-                        {notification.message}
-                    </motion.div>
-                )}
-                
-                <form className="space-y-6" onSubmit={handleAddSkill}>
-                    <motion.div variants={itemVariants}>
-                        <label htmlFor="key" className="block text-sm font-medium text-gray-700 mb-1">
-                            Category
-                        </label>
-                        <div className="relative">
+                variants={fadeInUp}
+              >
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                  <div className="border-b border-gray-200 px-6 py-4">
+                    <div className="flex items-center">
+                      <PlusCircle className="text-blue-600 mr-3" size={20} />
+                      <h2 className="text-lg font-medium text-gray-800">
+                        Add New Skill
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <form className="space-y-5" onSubmit={handleAddSkill}>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label
+                            htmlFor="key"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
+                            Skill Category
+                          </label>
+                          <div className="relative">
                             <select
-                                id="key"
-                                name="key"
-                                className="block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-md transition-all duration-200 bg-white"
-                                onChange={handleChange}
-                                required
-                                value={formData.key}
+                              id="key"
+                              name="key"
+                              className="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-md transition-all duration-200 bg-white"
+                              onChange={(e) =>
+                                setFormData({ ...formData, key: e.target.value })
+                              }
+                              required
+                              value={formData.key}
+                              disabled={loading || skill.length === 0}
                             >
-                                {skill.length === 0 && <option value="">Loading categories...</option>}
-                                {skill.map((item, index) => (
-                                    <option key={index} value={item.value}>{item.value}</option>
-                                ))}
+                              {skill.length === 0 && (
+                                <option value="">Loading categories...</option>
+                              )}
+                              {skill.map((item, index) => (
+                                <option key={index} value={item.value}>
+                                  {item.value}
+                                </option>
+                              ))}
                             </select>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                </svg>
+                              <Layers className="h-5 w-5 text-gray-400" />
                             </div>
+                          </div>
+                          <p className="mt-1 text-xs text-gray-500">
+                            Select an existing skill category
+                          </p>
                         </div>
-                    </motion.div>
-                    
-                    <motion.div variants={itemVariants}>
-                        <label htmlFor="value" className="block text-sm font-medium text-gray-700 mb-1">
+
+                        <div>
+                          <label
+                            htmlFor="value"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
                             Skill Name
-                        </label>
-                        <input
-                            type="text"
-                            id="value"
-                            name="value"
-                            value={formData.value}
-                            className="block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                            placeholder="Enter the skill name"
-                            onChange={handleChange}
-                            required
-                        />
-                    </motion.div>
-                    
-                    <motion.div className="flex justify-end pt-4" variants={itemVariants}>
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              id="value"
+                              name="value"
+                              value={formData.value}
+                              className="block w-full pl-3 pr-10 py-2.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                              placeholder="Enter the skill name"
+                              onChange={(e) =>
+                                setFormData({ ...formData, value: e.target.value })
+                              }
+                              required
+                              disabled={loading}
+                            />
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                              <Tag className="h-5 w-5 text-gray-400" />
+                            </div>
+                          </div>
+                          <p className="mt-1 text-xs text-gray-500">
+                            Enter a unique skill name
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end pt-2">
                         <button
-                            type="submit"
-                            disabled={loading}
-                            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                          type="submit"
+                          disabled={loading || skill.length === 0}
+                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {loading ? (
-                                <>
-                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    Processing...
-                                </>
-                            ) : (
-                                <>
-                                    <PlusCircle className="mr-2" size={20} />
-                                    Add Skill
-                                </>
-                            )}
+                          {loading ? (
+                            <>
+                              <svg
+                                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle
+                                  className="opacity-25"
+                                  cx="12"
+                                  cy="12"
+                                  r="10"
+                                  stroke="currentColor"
+                                  strokeWidth="4"
+                                ></circle>
+                                <path
+                                  className="opacity-75"
+                                  fill="currentColor"
+                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                              </svg>
+                              Processing...
+                            </>
+                          ) : (
+                            <>
+                              <PlusCircle className="mr-2" size={16} />
+                              Add Skill
+                            </>
+                          )}
                         </button>
-                    </motion.div>
-                </form>
-            </motion.div>
-            
-            {/* Visual indicator for skill categories */}
-            <motion.div 
-                className="mt-8 w-full max-w-2xl bg-white rounded-lg shadow-lg p-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-            >
-                <h2 className="text-xl font-medium text-gray-800 mb-4">Available Categories</h2>
-                <div className="flex flex-wrap gap-2">
-                    {skill.map((item, index) => (
-                        <motion.span 
-                            key={index}
-                            className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            {item.value}
-                        </motion.span>
-                    ))}
-                    {skill.length === 0 && (
-                        <span className="text-gray-500">Loading categories...</span>
-                    )}
+                      </div>
+                    </form>
+                  </div>
                 </div>
-            </motion.div>
+              </motion.div>
+            )}
+
+            {/* Delete Skills Tab */}
+            {activeTab === "delete" && (
+              <motion.div
+                className="max-w-3xl mx-auto"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
+              >
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                  <div className="border-b border-gray-200 px-6 py-4">
+                    <div className="flex items-center">
+                      <Trash2 className="text-red-600 mr-3" size={20} />
+                      <h2 className="text-lg font-medium text-gray-800">
+                        Delete Skill
+                      </h2>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <form className="space-y-5" onSubmit={handleDeleteSkill}>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label
+                            htmlFor="delete-key"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
+                            Skill Category
+                          </label>
+                          <div className="relative">
+                            <select
+                              id="delete-key"
+                              name="key"
+                              className="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 rounded-md transition-all duration-200 bg-white"
+                              onChange={(e) =>
+                                setDeleteFormData({
+                                  ...deleteFormData,
+                                  key: e.target.value,
+                                })
+                              }
+                              required
+                              value={deleteFormData.key}
+                              disabled={loading || skill.length === 0}
+                            >
+                              <option value="">Select a category</option>
+                              {skill.map((item, index) => (
+                                <option key={index} value={item.value}>
+                                  {item.value}
+                                </option>
+                              ))}
+                            </select>
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                              <Layers className="h-5 w-5 text-gray-400" />
+                            </div>
+                          </div>
+                          <p className="mt-1 text-xs text-gray-500">
+                            Select the category of the skill to delete
+                          </p>
+                        </div>
+
+                        <div>
+                          <label
+                            htmlFor="delete-value"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
+                            Skill Name
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              id="delete-value"
+                              name="value"
+                              value={deleteFormData.value}
+                              className="block w-full pl-3 pr-10 py-2.5 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200"
+                              placeholder="Enter the skill name to delete"
+                              onChange={(e) =>
+                                setDeleteFormData({
+                                  ...deleteFormData,
+                                  value: e.target.value,
+                                })
+                              }
+                              required
+                              disabled={loading}
+                            />
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                              <Tag className="h-5 w-5 text-gray-400" />
+                            </div>
+                          </div>
+                          <p className="mt-1 text-xs text-gray-500">
+                            Enter the exact name of the skill to delete
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end pt-2">
+                        <button
+                          type="submit"
+                          disabled={
+                            loading ||
+                            skill.length === 0 ||
+                            !deleteFormData.key ||
+                            !deleteFormData.value
+                          }
+                          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {loading ? (
+                            <>
+                              <svg
+                                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle
+                                  className="opacity-25"
+                                  cx="12"
+                                  cy="12"
+                                  r="10"
+                                  stroke="currentColor"
+                                  strokeWidth="4"
+                                ></circle>
+                                <path
+                                  className="opacity-75"
+                                  fill="currentColor"
+                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                              </svg>
+                              Processing...
+                            </>
+                          ) : (
+                            <>
+                              <Trash2 className="mr-2" size={16} />
+                              Delete Skill
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Browse Categories Tab */}
+            {activeTab === "browse" && (
+              <motion.div
+                className="max-w-4xl mx-auto"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
+              >
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                  <div className="border-b border-gray-200 px-6 py-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Search className="text-blue-600 mr-3" size={20} />
+                        <h2 className="text-lg font-medium text-gray-800">
+                          Browse Skill Categories
+                        </h2>
+                      </div>
+                      <span className="text-sm text-gray-500">
+                        {filteredCategories.length} categories
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="px-6 py-4 border-b border-gray-200">
+                    <div className="relative">
+                      <input
+                        type="text"
+                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Search categories..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        disabled={loading}
+                      />
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Search className="h-5 w-5 text-gray-400" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="px-6 py-4">
+                    {loading ? (
+                      <div className="flex justify-center items-center py-12">
+                        <svg
+                          className="animate-spin h-8 w-8 text-blue-500"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                        {filteredCategories.length > 0 ? (
+                          filteredCategories.map((item, index) => (
+                            <motion.div
+                              key={index}
+                              className="px-4 py-3 rounded-md bg-gray-50 border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
+                              whileHover={{ scale: 1.03 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <div className="font-medium text-gray-800 truncate">
+                                {item.value}
+                              </div>
+                            </motion.div>
+                          ))
+                        ) : (
+                          <div className="col-span-full text-center py-8 text-gray-500">
+                            {searchQuery
+                              ? "No matching categories found"
+                              : "No categories available"}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Recent Activities Tab */}
+            {activeTab === "recent" && (
+              <motion.div
+                className="max-w-4xl mx-auto"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
+              >
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                  <div className="border-b border-gray-200 px-6 py-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Award className="text-blue-600 mr-3" size={20} />
+                        <h2 className="text-lg font-medium text-gray-800">
+                          Recent Activities
+                        </h2>
+                      </div>
+                      <button
+                        onClick={clearRecentActivities}
+                        className="text-xs text-red-600 hover:text-red-800"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="overflow-hidden">
+                    {recentActivities.length > 0 ? (
+                      <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Action
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Skill Name
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Category
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Time
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {recentActivities.map((activity, index) => (
+                            <tr key={index}>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <span
+                                  className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                    activity.type === "added"
+                                      ? "bg-green-100 text-green-800"
+                                      : "bg-red-100 text-red-800"
+                                  }`}
+                                >
+                                  {activity.type === "added" ? "Added" : "Deleted"}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap">
+                                <div className="font-medium text-gray-900">
+                                  {activity.data.value}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {activity.data.key}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {activity.timestamp.toLocaleString()}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <div className="px-6 py-12 text-center text-gray-500">
+                        <p>No recent activities</p>
+                        <p className="text-sm mt-2">
+                          Added or deleted skills will appear here
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default AddSkill;

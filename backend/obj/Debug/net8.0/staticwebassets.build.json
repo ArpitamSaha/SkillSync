@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "Kt5kI9mePDAfZTcEgy3I0eWowTliLCMp2nLZes8yLyg=",
+  "Source": "ResumeFilterBackend",
+  "BasePath": "_content/ResumeFilterBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

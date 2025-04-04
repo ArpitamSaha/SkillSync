@@ -1,0 +1,156 @@
+{
+  "machine learning": [
+    "random forest",
+    "svm",
+    "decision trees",
+    "xgboost",
+    "scikit-learn",
+    "ensemble learning",
+    "gradio",
+    "ml",
+    "ML"
+  ],
+  "deep learning": [
+    "cnn",
+    "rnn",
+    "lstm",
+    "tensorflow",
+    "pytorch"
+  ],
+  "data science": [
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "seaborn",
+    "scikit-learn",
+    "data visualization"
+  ],
+  "artificial intelligence": [
+    "nlp",
+    "computer vision",
+    "reinforcement learning",
+    "chatbots",
+    "robotics",
+    "ai",
+    "gen ai",
+    "expert systems"
+  ],
+  "cloud computing": [
+    "aws",
+    "azure",
+    "gcp",
+    "kubernetes",
+    "docker",
+    "serverless",
+    "terraform"
+  ],
+  "devops": [
+    "jenkins",
+    "gitlab ci/cd",
+    "docker",
+    "kubernetes",
+    "ansible",
+    "terraform",
+    "helm",
+    "istio"
+  ],
+  "mern": [
+    "mongodb",
+    "express.js",
+    "react",
+    "node.js"
+  ],
+  "mean": [
+    "mongodb",
+    "express.js",
+    "angular",
+    "node.js"
+  ],
+  "pern": [
+    "postgresql",
+    "express.js",
+    "react",
+    "node.js"
+  ],
+  "web development": [
+    "html",
+    "css",
+    "javascript",
+    "jquery",
+    "bootstrap",
+    "tailwind"
+  ],
+  "full stack development": [
+    "mern",
+    "mean",
+    "pern",
+    "graphql",
+    "rest api",
+    "microservices"
+  ],
+  "database": [
+    "sql",
+    "nosql",
+    "mysql",
+    "postgresql",
+    "mongodb",
+    "redis",
+    "oracle",
+    "cassandra",
+    "firebase"
+  ],
+  "cybersecurity": [
+    "intrusion detection",
+    "firewall",
+    "encryption",
+    "ethical hacking",
+    "penetration testing",
+    "owasp",
+    "zero trust"
+  ],
+  "sap": [
+    "hana",
+    "erp",
+    "fico",
+    "abap",
+    "mm",
+    "scm",
+    "s/4hana",
+    "bw"
+  ],
+  "salesforce": [
+    "crm",
+    "lightning",
+    "apex"
+  ],
+  "networking": [
+    "tcp/ip",
+    "dns",
+    "http/https",
+    "vpn",
+    "routing",
+    "switching",
+    "load balancer",
+    "proxy"
+  ],
+  "blockchain": [
+    "ethereum",
+    "solidity",
+    "smart contracts",
+    "nfts",
+    "defi",
+    "hyperledger",
+    "ipfs"
+  ],
+  "software testing": [
+    "selenium",
+    "junit",
+    "testng",
+    "cypress",
+    "postman",
+    "load testing",
+    "api testing",
+    "tdd",
+    "bdd"
+  ]
+}

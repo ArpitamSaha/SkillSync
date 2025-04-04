@@ -195,7 +195,7 @@ const Home = () => {
           <div className="w-24 h-1 bg-blue-500 mx-auto"></div>
         </motion.div>
 
-        {/* Feature 1 - Reduced image size */}
+        {/* Feature 1 - Fixed image alignment */}
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-16"
           initial="hidden"
@@ -203,8 +203,8 @@ const Home = () => {
           viewport={{ once: true, margin: "-100px" }}
           variants={container}
         >
-          <motion.div variants={slideUp} className="order-1 md:order-2">
-            <div className="max-w-md mx-auto md:mx-0">
+          <motion.div variants={slideUp} className="order-1 md:order-2 flex justify-center md:justify-end">
+            <div className="w-full max-w-md">
               <img 
                 src={AnalysisImage}
                 alt="Resume Analysis"
@@ -222,7 +222,7 @@ const Home = () => {
             </h3>
             <p className="text-gray-600 mb-6">
               Our system automatically extracts and categorizes key information from resumes including skills, 
-              experience levels, and educational qualifications with 95% accuracy.
+              experience levels, and educational qualifications.
             </p>
             <button
               onClick={() => navigate("/find")}
@@ -233,7 +233,7 @@ const Home = () => {
           </motion.div>
         </motion.div>
 
-        {/* Feature 2 - Reduced image size */}
+        {/* Feature 2 - Fixed image alignment */}
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center"
           initial="hidden"
@@ -241,8 +241,8 @@ const Home = () => {
           viewport={{ once: true, margin: "-100px" }}
           variants={container}
         >
-          <motion.div variants={slideUp}>
-            <div className="max-w-md mx-auto md:mx-0">
+          <motion.div variants={slideUp} className="flex justify-center md:justify-start">
+            <div className="w-full max-w-md">
               <img 
                 src={SkillsImage}
                 alt="Skill Management"

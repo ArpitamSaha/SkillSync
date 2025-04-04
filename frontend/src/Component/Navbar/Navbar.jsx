@@ -26,6 +26,8 @@ const Navbar = ({ user, setUser }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("skillActivities");
+    localStorage.removeItem("recentSearches");
+    localStorage.removeItem("resumesPerPage");
     setUser(null);
     navigate("/login");
   };
